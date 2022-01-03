@@ -62,6 +62,46 @@ const move = () => {
 
 /* harmony default export */ __webpack_exports__["default"] = (move);
 
+/***/ }),
+
+/***/ "./src/js/modules/shot.js":
+/*!********************************!*\
+  !*** ./src/js/modules/shot.js ***!
+  \********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ Gun; }
+/* harmony export */ });
+const gun = document.querySelector('.ship__head');
+const sky = document.querySelector('.sky');
+  
+
+class Gun {
+   constructor() {
+       const projectile = document.createElement('div');
+       projectile.classList.add('projectile');
+       sky.append(projectile);
+       projectile.style.left = (gun.getBoundingClientRect().left) + ((gun.getBoundingClientRect().width) / 2) +'px';
+       projectile.style.top = gun.getBoundingClientRect().top + 'px';
+       let distance = +projectile.style.top.slice(0, -2);
+       
+       function trajectory () {
+           if (distance > 0) {
+               distance = distance - 1;
+               // projectile.style.transform = `translateY(-${distance}px)`;
+               projectile.style.top = distance + 'px';
+           } else{
+               clearInterval(trajectory);
+               projectile.remove();
+           }
+       }
+
+       setInterval(trajectory, 10);
+   }
+}
+
 /***/ })
 
 /******/ 	});
@@ -91,6 +131,23 @@ const move = () => {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -111,9 +168,19 @@ var __webpack_exports__ = {};
   \*************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_move__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/move */ "./src/js/modules/move.js");
+/* harmony import */ var _modules_shot__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/shot */ "./src/js/modules/shot.js");
+
+
+
 
 
 (0,_modules_move__WEBPACK_IMPORTED_MODULE_0__["default"])();
+
+document.addEventListener('keydown', (event) => {
+    if(event.code == 'Space') {
+        new _modules_shot__WEBPACK_IMPORTED_MODULE_1__["default"];
+    }
+});
 }();
 /******/ })()
 ;
