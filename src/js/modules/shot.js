@@ -13,7 +13,7 @@ export default class Gun {
        
        function trajectory () {
            if (distance > 0) {
-               distance = distance - 1;
+               distance = distance - 10;
                // projectile.style.transform = `translateY(-${distance}px)`;
                projectile.style.top = distance + 'px';
            } else{

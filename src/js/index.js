@@ -1,5 +1,6 @@
 import move from './modules/move';
 import Gun from './modules/shot';
+import Enemy from './modules/enemy';
 
 
 
@@ -10,3 +11,8 @@ document.addEventListener('keydown', (event) => {
         new Gun;
     }
 });
+
+function makeEnemies() {
+    new Enemy();
+}
+// setInterval(makeEnemies, 3000);
