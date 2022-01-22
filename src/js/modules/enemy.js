@@ -2,10 +2,12 @@ const sky = document.querySelector('.sky');
 
 export default class Enemy {
     constructor() {
-        const enemyShip = document.createElement('div');
+
+        let enemyShip = document.createElement('div');
         enemyShip.style.width = '50px';
         enemyShip.style.height = '70px';
         enemyShip.style.borderRadius = '10px';
+
         function enemyColor() {
             let i = Math.round(Math.random() * 10);
             if(i <= 3) {
@@ -16,9 +18,11 @@ export default class Enemy {
                 enemyShip.style.backgroundColor = 'red';
             }
         }
+
         enemyColor();
         enemyShip.style.position = 'absolute';
         enemyShip.style.top = '0px';
+
         function enemyStart() {
             let i = Math.round(Math.random() * 10);
             if (i == 10) {
@@ -26,6 +30,7 @@ export default class Enemy {
             }
             enemyShip.style.right = (i *10) + '%';
         }
+
         enemyStart();
         sky.append(enemyShip);
         
@@ -40,6 +45,7 @@ export default class Enemy {
                 clearInterval(enemyMove);
             }
         }
+        setInterval(enemyMove, 60);
         
         
         function enemyCrash() {
@@ -51,13 +57,57 @@ export default class Enemy {
                     item.getBoundingClientRect().left >= enemyShip.getBoundingClientRect().left &&
                     item.getBoundingClientRect().right <= enemyShip.getBoundingClientRect().right
                     ) {
+                        enemyBang(true);
                         enemyShip.remove();
                         item.remove();
                     }
                 
             });
         }
+
+        function enemyBang(arg) {
+            const canvas = document.createElement('canvas'),
+                  ctx = canvas.getContext('2d'),
+                  sprite = new Image();
+
+            canvas.style.width = '140px';
+            canvas.style.height = '140px';
+            canvas.style.position = 'absolute';
+            canvas.style.top = enemyShip.style.top;
+            canvas.style.right = enemyShip.style.right;
+            canvas.style.transform = 'translateX(30%)';
+            sprite.src = 'img/sprite.png';
+            sky.append(canvas);
+
+            let tickCount = 0,
+                spriteLenght = 8,
+                frameWidth = 0,
+                frameHight = 0;
+
+            if(arg === true) {
+                tick();
+                setTimeout(() => canvas.remove(), 1000);
+            }
+
+            function tick() {
+                draw();
+                if(tickCount < spriteLenght) {
+                    frameWidth = frameWidth + 240;
+                }
+                if(tickCount == spriteLenght) {
+                    tickCount = 0;
+                    frameHight = frameHight + 240;
+                    frameWidth = 0;
+                }
+                requestAnimationFrame(tick);
+                tickCount++;
+            }
+            
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(sprite, frameWidth, frameHight, 240, 240, 0, 0, canvas.width, canvas.height);
+            }
+        }
         
-        setInterval(enemyMove, 60);
     }
 }
