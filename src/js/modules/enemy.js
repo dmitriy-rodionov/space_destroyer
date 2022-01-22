@@ -3,23 +3,28 @@ const sky = document.querySelector('.sky');
 export default class Enemy {
     constructor() {
 
-        let enemyShip = document.createElement('div');
-        enemyShip.style.width = '50px';
-        enemyShip.style.height = '70px';
-        enemyShip.style.borderRadius = '10px';
+        let enemyShip = document.createElement('img');
+        enemyShip.style.width = '70px';
+        enemyShip.style.height = '90px';
+        // enemyShip.style.borderRadius = '10px';
 
-        function enemyColor() {
+        function enemyType() {
             let i = Math.round(Math.random() * 10);
-            if(i <= 3) {
-                enemyShip.style.backgroundColor = 'pink';
-            } else if(i > 3 && i < 7) {
-                enemyShip.style.backgroundColor = 'yellow';
+            if(i <= 2) {
+                // enemyShip.style.backgroundColor = 'pink';
+                enemyShip.src = 'img/kisspng.png';
+            } else if(i > 2 && i < 5) {
+                enemyShip.src = 'img/pngegg.png';
+            } else if(i >= 5 && i < 7) {
+                enemyShip.src = 'img/pngegg(2).png';
+            } else if(i >= 7 && i < 9) {
+                enemyShip.src = 'img/pngegg(5).png';
             } else {
-                enemyShip.style.backgroundColor = 'red';
+                enemyShip.src = 'img/pngegg(3).png';
             }
         }
 
-        enemyColor();
+        enemyType();
         enemyShip.style.position = 'absolute';
         enemyShip.style.top = '0px';
 
@@ -45,7 +50,7 @@ export default class Enemy {
                 clearInterval(enemyMove);
             }
         }
-        setInterval(enemyMove, 60);
+        setInterval(enemyMove, 10);
         
         
         function enemyCrash() {

@@ -6,9 +6,23 @@
 .sky{
     width: 100%;
     height: 100vh;
-    background-color: rgb(16, 16, 58);
+    // background-color: rgb(16, 16, 58);
     position: relative;
     overflow: hidden;
+    .back{
+        height: 200vh;
+        animation: downward 35s linear infinite;
+        background: url('../../img/space2.jpg')  center center / cover;
+        background-size: 100% 50%;
+    }
+}
+@keyframes downward {
+    from {
+        background-position: 0% 0%;
+    }
+    to {
+        background-position: 0% 200%;
+    }
 }
 .ship{
     position: absolute;
@@ -16,58 +30,17 @@
     bottom: 30px;
     display: flex;
     transform: translateY(-3px);
-    transition: transform 0.1s;
-    &__body{
-        width: 40px;
+    transition: transform 0.2s;
+    img{
+        width: 100px;
         height: 100px;
-        background: linear-gradient(to top,#b36f6f 30%, #e99797);
-        border-radius: 5px;
-        z-index: 10;
-        border-top: 1px solid rgb(179, 111, 111);
-    }
-    &__left-turbine{
-        width: 50px;
-        height: 50px;
-        background-color: rgba($color: #b36f6f, $alpha: 1);
-        align-self: flex-end;
-        border-radius: 100%;
-        position: absolute;
-        bottom: -5px;
-        left: -80%;
-    }
-    &__right-turbine{
-        width: 50px;
-        height: 50px;
-        background-color: rgba($color: rgb(179, 111, 111), $alpha: 1);
-        align-self: flex-end;
-        border-radius: 100%;
-        position: absolute;
-        bottom: -5px;
-        right: -80%;
-    }
-    &__head{
-        width: 37px;
-        height: 50px;
-        background-color: rgb(197, 99, 115);
-        border-radius: 45%;
-        position: absolute;
-        top: -33px;
-        right: 2px;
-        display: flex;
-        justify-content: center;
-        &-window{
-            width: 2px;
-            height: 10px;
-            background-color: #000;
-            border-radius: 3px;
-        }
     }
 }
 
 .projectile{
-    width: 6px;
-    height: 15px;
-    background-color: #fff;
+    width: 3px;
+    height: 7px;
+    background-color: #09B0FF;
     border-radius: 5px;
     position: absolute;
 }

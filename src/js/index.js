@@ -15,4 +15,4 @@ document.addEventListener('keydown', (event) => {
 function makeEnemies() {
     new Enemy();
 }
-// setInterval(makeEnemies, 3000);
+// setInterval(makeEnemies, 2000);

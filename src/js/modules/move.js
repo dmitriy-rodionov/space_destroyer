@@ -4,44 +4,44 @@ const move = () => {
     let x = 0,
         y = 0;
 
-        moveUp();
-        moveDown();
-        moveRight();
-        moveLeft();
+        moveUp(35);
+        moveDown(35);
+        moveRight(35);
+        moveLeft(35);
         
-    function moveUp() {
+    function moveUp(i) {
         document.addEventListener('keydown', (e) => {
 
             if(e.code == 'KeyW' && (ship.getBoundingClientRect().top) > sky.getBoundingClientRect().top) {
-                y = y - 40;
+                y = y - i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 
     }
 
-    function moveDown() {
+    function moveDown(i) {
         document.addEventListener('keydown', (e) => {
             if(e.code == 'KeyS' && (ship.getBoundingClientRect().bottom) < sky.getBoundingClientRect().bottom) {
-                y = y + 40;
+                y = y + i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 
     }
 
-    function moveRight() {
+    function moveRight(i) {
         document.addEventListener('keydown', (e) => {
             e.preventDefault();
             if(e.code == 'KeyD' && (ship.getBoundingClientRect().right) < sky.getBoundingClientRect().right) {
-                x = x + 40;
+                x = x + i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 
     }
 
-    function moveLeft() {
+    function moveLeft(i) {
         document.addEventListener('keydown', (e) => {
             if(e.code == 'KeyA' && ship.getBoundingClientRect().left > sky.getBoundingClientRect().left) {
-                x = x - 40;
+                x = x - i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 

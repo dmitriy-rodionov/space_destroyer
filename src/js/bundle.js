@@ -17,23 +17,28 @@ const sky = document.querySelector('.sky');
 class Enemy {
     constructor() {
 
-        let enemyShip = document.createElement('div');
-        enemyShip.style.width = '50px';
-        enemyShip.style.height = '70px';
-        enemyShip.style.borderRadius = '10px';
+        let enemyShip = document.createElement('img');
+        enemyShip.style.width = '70px';
+        enemyShip.style.height = '90px';
+        // enemyShip.style.borderRadius = '10px';
 
-        function enemyColor() {
+        function enemyType() {
             let i = Math.round(Math.random() * 10);
-            if(i <= 3) {
-                enemyShip.style.backgroundColor = 'pink';
-            } else if(i > 3 && i < 7) {
-                enemyShip.style.backgroundColor = 'yellow';
+            if(i <= 2) {
+                // enemyShip.style.backgroundColor = 'pink';
+                enemyShip.src = 'img/kisspng.png';
+            } else if(i > 2 && i < 5) {
+                enemyShip.src = 'img/pngegg.png';
+            } else if(i >= 5 && i < 7) {
+                enemyShip.src = 'img/pngegg(2).png';
+            } else if(i >= 7 && i < 9) {
+                enemyShip.src = 'img/pngegg(5).png';
             } else {
-                enemyShip.style.backgroundColor = 'red';
+                enemyShip.src = 'img/pngegg(3).png';
             }
         }
 
-        enemyColor();
+        enemyType();
         enemyShip.style.position = 'absolute';
         enemyShip.style.top = '0px';
 
@@ -59,7 +64,7 @@ class Enemy {
                 clearInterval(enemyMove);
             }
         }
-        setInterval(enemyMove, 60);
+        setInterval(enemyMove, 10);
         
         
         function enemyCrash() {
@@ -141,44 +146,44 @@ const move = () => {
     let x = 0,
         y = 0;
 
-        moveUp();
-        moveDown();
-        moveRight();
-        moveLeft();
+        moveUp(35);
+        moveDown(35);
+        moveRight(35);
+        moveLeft(35);
         
-    function moveUp() {
+    function moveUp(i) {
         document.addEventListener('keydown', (e) => {
 
             if(e.code == 'KeyW' && (ship.getBoundingClientRect().top) > sky.getBoundingClientRect().top) {
-                y = y - 40;
+                y = y - i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 
     }
 
-    function moveDown() {
+    function moveDown(i) {
         document.addEventListener('keydown', (e) => {
             if(e.code == 'KeyS' && (ship.getBoundingClientRect().bottom) < sky.getBoundingClientRect().bottom) {
-                y = y + 40;
+                y = y + i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 
     }
 
-    function moveRight() {
+    function moveRight(i) {
         document.addEventListener('keydown', (e) => {
             e.preventDefault();
             if(e.code == 'KeyD' && (ship.getBoundingClientRect().right) < sky.getBoundingClientRect().right) {
-                x = x + 40;
+                x = x + i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 
     }
 
-    function moveLeft() {
+    function moveLeft(i) {
         document.addEventListener('keydown', (e) => {
             if(e.code == 'KeyA' && ship.getBoundingClientRect().left > sky.getBoundingClientRect().left) {
-                x = x - 40;
+                x = x - i;
                 ship.style.transform = `translate(${x}px,${y}px)`;
             }
         }); 
@@ -200,7 +205,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": function() { return /* binding */ Gun; }
 /* harmony export */ });
-const gun = document.querySelector('.ship__head');
+const ship = document.querySelector('.ship');
 const sky = document.querySelector('.sky');
   
 
@@ -209,14 +214,13 @@ class Gun {
        const projectile = document.createElement('div');
        projectile.classList.add('projectile');
        sky.append(projectile);
-       projectile.style.left = (gun.getBoundingClientRect().left) + ((gun.getBoundingClientRect().width) / 2) +'px';
-       projectile.style.top = gun.getBoundingClientRect().top + 'px';
+       projectile.style.left = (ship.getBoundingClientRect().left) + ((ship.getBoundingClientRect().width) / 2 - 3) +'px';
+       projectile.style.top = ship.getBoundingClientRect().top - 15 + 'px';
        let distance = +projectile.style.top.slice(0, -2);
        
        function trajectory () {
            if (distance > 0) {
                distance = distance - 10;
-               // projectile.style.transform = `translateY(-${distance}px)`;
                projectile.style.top = distance + 'px';
            } else{
                clearInterval(trajectory);
@@ -313,7 +317,7 @@ document.addEventListener('keydown', (event) => {
 function makeEnemies() {
     new _modules_enemy__WEBPACK_IMPORTED_MODULE_2__["default"]();
 }
-// setInterval(makeEnemies, 3000);
+// setInterval(makeEnemies, 2000);
 }();
 /******/ })()
 ;
