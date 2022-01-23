@@ -6,7 +6,6 @@
 .sky{
     width: 100%;
     height: 100vh;
-    // background-color: rgb(16, 16, 58);
     position: relative;
     overflow: hidden;
     .back{
@@ -50,4 +49,20 @@
     background-color: red;
     border-radius: 5px;
     position: absolute;
+}
+.health{
+    height: 10px;
+    width: 100%;
+    background: url('../../img/road.jpg');
+    position: absolute;
+    bottom: 0px;
+    transform: translateX(100%);
+    z-index: 2;
+    &-second{
+        height: 10px;
+        width: 100%;
+        background: linear-gradient(90deg, rgb(232, 21, 21), rgb(0, 255, 255) 100%);
+        position: absolute;
+        bottom: 0px;
+    }
 }

@@ -53,3 +53,20 @@
   border-radius: 5px;
   position: absolute;
 }
+
+.health {
+  height: 10px;
+  width: 100%;
+  background: url("../../img/road.jpg");
+  position: absolute;
+  bottom: 0px;
+  transform: translateX(100%);
+  z-index: 2;
+}
+.health-second {
+  height: 10px;
+  width: 100%;
+  background: linear-gradient(90deg, #e81515, aqua 100%);
+  position: absolute;
+  bottom: 0px;
+}

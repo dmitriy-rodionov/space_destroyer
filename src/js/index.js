@@ -1,10 +1,12 @@
 import move from './modules/move';
 import Gun from './modules/shot';
 import Enemy from './modules/enemy';
+import shipHealth from './modules/shiphealth';
 
 
 
 move();
+shipHealth();
 
 document.addEventListener('keydown', (event) => {
     if(event.code == 'Space') {
@@ -15,4 +17,4 @@ document.addEventListener('keydown', (event) => {
 function makeEnemies() {
     new Enemy();
 }
-// setInterval(makeEnemies, 2000);
+// setInterval(makeEnemies, 5000);
