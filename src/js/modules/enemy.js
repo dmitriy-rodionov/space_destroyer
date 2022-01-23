@@ -1,4 +1,5 @@
-const sky = document.querySelector('.sky');
+const sky = document.querySelector('.sky'),
+      ship = document.querySelector('.ship');
 
 export default class Enemy {
     constructor() {
@@ -60,7 +61,8 @@ export default class Enemy {
                     item.getBoundingClientRect().top < enemyShip.getBoundingClientRect().bottom &&
                     item.getBoundingClientRect().bottom < enemyShip.getBoundingClientRect().bottom &&
                     item.getBoundingClientRect().left >= enemyShip.getBoundingClientRect().left &&
-                    item.getBoundingClientRect().right <= enemyShip.getBoundingClientRect().right
+                    item.getBoundingClientRect().right <= enemyShip.getBoundingClientRect().right &&
+                    ship.getBoundingClientRect().top > enemyShip.getBoundingClientRect().bottom
                     ) {
                         enemyBang(true);
                         enemyShip.remove();
@@ -113,6 +115,36 @@ export default class Enemy {
                 ctx.drawImage(sprite, frameWidth, frameHight, 240, 240, 0, 0, canvas.width, canvas.height);
             }
         }
+
+        class EnemyGun {
+            constructor() {
+                const enemyProjectile = document.createElement('div');
+                enemyProjectile.classList.add('enemyProjectile');
+                enemyProjectile.style.left = (enemyShip.getBoundingClientRect().left) + ((enemyShip.getBoundingClientRect().width) / 2 - 3) +'px';
+                enemyProjectile.style.top = enemyShip.getBoundingClientRect().bottom + 'px';
+                sky.append(enemyProjectile);
+                let distance = +enemyProjectile.style.top.slice(0, -2);
+
+                function trajectory () {
+                    if (distance < sky.getBoundingClientRect().bottom) {
+                        distance = distance + 5;
+                        enemyProjectile.style.top = distance + 'px';
+                    } 
+                    if(distance > sky.getBoundingClientRect().bottom) {
+                        clearInterval(trajectory);
+                        enemyProjectile.remove();
+                    }
+                    if(enemyProjectile.style.left.slice(0, -2) < 0) {
+                        enemyProjectile.remove();
+                    }
+                }
+                setInterval(trajectory, 10);
+            }
+        }
+        function createEnProj() {
+            new EnemyGun
+        }
+        setInterval(createEnProj, 5000);
         
     }
 }
