@@ -64,6 +64,13 @@ export default class Enemy {
                     item.getBoundingClientRect().right <= enemyShip.getBoundingClientRect().right &&
                     ship.getBoundingClientRect().top > enemyShip.getBoundingClientRect().bottom
                     ) {
+                        let counter = document.querySelector('.counter'),
+                            count = +counter.textContent;
+                        count++;
+                        counter.textContent = count;
+                        if(counter.textContent.length < 2) {
+                            counter.textContent = '0' + counter.textContent;
+                        }
                         enemyBang(true);
                         enemyShip.remove();
                         item.remove();

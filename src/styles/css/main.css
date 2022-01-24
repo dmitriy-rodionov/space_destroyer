@@ -66,7 +66,34 @@
 .health-second {
   height: 10px;
   width: 100%;
-  background: linear-gradient(90deg, #e81515, aqua 100%);
+  background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
   position: absolute;
   bottom: 0px;
+}
+
+.score {
+  width: 100px;
+  height: 50px;
+  border: 2px solid lightslategray;
+  border-radius: 50% 50% 0 0/100% 100% 0 0;
+  background-color: lightblue;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+}
+
+.counter {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 8%;
+  font-family: "ds", sans-serif;
+  text-align: center;
+  font-size: 40px;
+  letter-spacing: 3px;
+}
+
+@font-face {
+  font-family: "ds";
+  src: url("../../fonts/POCKC___.TTF");
 }

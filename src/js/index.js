@@ -14,7 +14,12 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-function makeEnemies() {
-    new Enemy();
+const makeEnemies = function() {
+    const counter = document.querySelector('.counter');
+    if(+counter.textContent >= 5) {
+        clearInterval(makeEnemies);
+    } else {
+        new Enemy();
+    }
 }
-// setInterval(makeEnemies, 5000);
+// setInterval(makeEnemies, 2000);
