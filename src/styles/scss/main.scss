@@ -3,11 +3,16 @@
     margin: 0;
     padding: 0;
 }
+@import './first';
+@import './second';
+
 .sky{
     width: 100%;
     height: 100vh;
     position: relative;
     overflow: hidden;
+    transition: transform 1s;
+    z-index: 10;
     .back{
         height: 200vh;
         animation: downward 35s linear infinite;
@@ -23,6 +28,7 @@
         background-position: 0% 200%;
     }
 }
+
 .ship{
     position: absolute;
     right: 50%;
@@ -91,3 +97,19 @@
     font-family: 'ds';
     src: url('../../fonts/POCKC___.TTF');
 }
+@font-face {
+    font-family: 'NeoTech';
+    src: url('../../fonts/NeoTech-Medium.eot');
+    src: local('../../fonts/NeoTech Medium'), local('NeoTech-Medium'),
+        url('../../fonts/NeoTech-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../../fonts/NeoTech-Medium.woff2') format('woff2'),
+        url('../../fonts/NeoTech-Medium.woff') format('woff'),
+        url('../../fonts/NeoTech-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../fonts/Roboto-Medium.eot');
+    src: url('../../fonts/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/Roboto-Medium.woff') format('woff'),
+    url('../../fonts/Roboto-Medium.ttf') format('truetype');
+    }
