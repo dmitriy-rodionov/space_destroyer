@@ -9,7 +9,7 @@ const lastEnemy = () => {
     le.style.left = '50%';
     sky.append(le);
     le.classList.add('lastEnemy');
-    let enemyHealth = 10;
+    let enemyHealth = 100;
 
     class EnemyGun {
         constructor() {
@@ -54,7 +54,6 @@ const lastEnemy = () => {
                 ship.getBoundingClientRect().top > le.getBoundingClientRect().bottom
                 ) {
                     enemyHealth--;
-                    console.log(enemyHealth);
                     if(enemyHealth < 1) {
                         enemyBang(true);
                         le.remove();

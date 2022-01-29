@@ -142,9 +142,12 @@ class Enemy {
             constructor() {
                 const enemyProjectile = document.createElement('div');
                 enemyProjectile.classList.add('enemyProjectile');
-                enemyProjectile.style.left = (enemyShip.getBoundingClientRect().left) + ((enemyShip.getBoundingClientRect().width) / 2 - 3) +'px';
+                enemyProjectile.style.left = (enemyShip.getBoundingClientRect().left) + (enemyShip.getBoundingClientRect().width / 2) +'px';
                 enemyProjectile.style.top = enemyShip.getBoundingClientRect().bottom + 'px';
-                sky.append(enemyProjectile);
+                if(enemyProjectile.style.left.slice(0, -2) > 0) {
+                    sky.append(enemyProjectile);
+                }
+                // sky.append(enemyProjectile);
                 let distance = +enemyProjectile.style.top.slice(0, -2);
 
                 function trajectory () {
@@ -153,14 +156,14 @@ class Enemy {
                         enemyProjectile.style.top = distance + 'px';
                     } 
                     if(distance > sky.getBoundingClientRect().bottom) {
-                        clearInterval(trajectory);
+                        clearInterval(timerId);
                         enemyProjectile.remove();
                     }
                     if(enemyProjectile.style.left.slice(0, -2) < 0) {
                         enemyProjectile.remove();
                     }
                 }
-                setInterval(trajectory, 10);
+                let timerId = setInterval(trajectory, 10);
             }
         }
         function createEnProj() {
@@ -191,7 +194,7 @@ const lastEnemy = () => {
     le.style.left = '50%';
     sky.append(le);
     le.classList.add('lastEnemy');
-    let enemyHealth = 10;
+    let enemyHealth = 100;
 
     class EnemyGun {
         constructor() {
@@ -236,7 +239,6 @@ const lastEnemy = () => {
                 ship.getBoundingClientRect().top > le.getBoundingClientRect().bottom
                 ) {
                     enemyHealth--;
-                    console.log(enemyHealth);
                     if(enemyHealth < 1) {
                         enemyBang(true);
                         le.remove();
@@ -379,15 +381,7 @@ const shipHealth = () => {
           ship = document.querySelector('.ship'),
           sky = document.querySelector('.sky'),
           scale = document.querySelector('.health'),
-          exit = document.querySelector('.exit'),
           damage;
-    exit.addEventListener('click', () => {
-        health = 100;
-        let win = document.querySelector('.win');
-        if(win) {
-            win.remove();
-        }
-    });
     let timerId = setInterval(reduceHealth, 60);
     function reduceHealth() {
        let enPr = document.querySelectorAll('.enemyProjectile');
@@ -610,7 +604,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 getStart();
-finish();
 showControl();
 hideControl();
 (0,_modules_move__WEBPACK_IMPORTED_MODULE_0__["default"])();
@@ -619,34 +612,10 @@ hideControl();
 function getStart() {
     document.body.style.overflow = 'hidden';
     const start = document.querySelector('.start'),
-          sky = document.querySelector('.sky'),
-          exit = document.querySelector('.exit');
+          sky = document.querySelector('.sky');
     start.addEventListener('click',() => {
         sky.style.transform = 'translateY(-100%)';
-        let timerId = setInterval(makeEnemies, 2000);
-        exit.addEventListener('click', () => {
-            clearInterval(timerId);
-        });
-    });
-}
-
-function finish() {
-    const sky = document.querySelector('.sky'),
-          exit = document.querySelector('.exit'),
-          counter = document.querySelector('.counter'),
-          health = document.querySelector('.health');
-    exit.addEventListener('click', () => {
-        sky.style.transform = 'translateY(0%)';
-        health.style.transform = 'translateX(100%)';
-        counter.textContent = '00';
-        let enemies = document.querySelectorAll('.enemy'),
-          le = document.querySelector('.lastEnemy');
-        enemies.forEach((item) => {
-            item.remove();
-        });
-        if(le != null) {
-            le.remove();
-        }
+        setInterval(makeEnemies, 2000);
     });
 }
 
@@ -673,16 +642,18 @@ document.addEventListener('keydown', (event) => {
 });
 
 const makeEnemies = function() {
-    const counter = document.querySelector('.counter');
-    if(+counter.textContent > 5) {
+    const counter = document.querySelector('.counter'),
+          enemies = document.querySelectorAll('.enemy');
+    if(+counter.textContent > 49) {
         clearInterval(makeEnemies);
-        const enemies = document.querySelectorAll('.enemy');
         enemies.forEach((item) => {
             item.remove();
             further();
         });
     } else {
-        new _modules_enemy__WEBPACK_IMPORTED_MODULE_2__["default"]();
+        if(enemies.length < 4) {
+            new _modules_enemy__WEBPACK_IMPORTED_MODULE_2__["default"]();
+        }
     }
 }
 

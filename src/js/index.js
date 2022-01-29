@@ -6,7 +6,6 @@ import lastEnemy from './modules/lastEnemy';
 
 
 getStart();
-finish();
 showControl();
 hideControl();
 move();
@@ -15,34 +14,10 @@ shipHealth();
 function getStart() {
     document.body.style.overflow = 'hidden';
     const start = document.querySelector('.start'),
-          sky = document.querySelector('.sky'),
-          exit = document.querySelector('.exit');
+          sky = document.querySelector('.sky');
     start.addEventListener('click',() => {
         sky.style.transform = 'translateY(-100%)';
-        let timerId = setInterval(makeEnemies, 2000);
-        exit.addEventListener('click', () => {
-            clearInterval(timerId);
-        });
-    });
-}
-
-function finish() {
-    const sky = document.querySelector('.sky'),
-          exit = document.querySelector('.exit'),
-          counter = document.querySelector('.counter'),
-          health = document.querySelector('.health');
-    exit.addEventListener('click', () => {
-        sky.style.transform = 'translateY(0%)';
-        health.style.transform = 'translateX(100%)';
-        counter.textContent = '00';
-        let enemies = document.querySelectorAll('.enemy'),
-          le = document.querySelector('.lastEnemy');
-        enemies.forEach((item) => {
-            item.remove();
-        });
-        if(le != null) {
-            le.remove();
-        }
+        setInterval(makeEnemies, 2000);
     });
 }
 
@@ -69,16 +44,18 @@ document.addEventListener('keydown', (event) => {
 });
 
 const makeEnemies = function() {
-    const counter = document.querySelector('.counter');
-    if(+counter.textContent > 5) {
+    const counter = document.querySelector('.counter'),
+          enemies = document.querySelectorAll('.enemy');
+    if(+counter.textContent > 49) {
         clearInterval(makeEnemies);
-        const enemies = document.querySelectorAll('.enemy');
         enemies.forEach((item) => {
             item.remove();
             further();
         });
     } else {
-        new Enemy();
+        if(enemies.length < 4) {
+            new Enemy();
+        }
     }
 }
 

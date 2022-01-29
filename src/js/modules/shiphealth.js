@@ -3,15 +3,7 @@ const shipHealth = () => {
           ship = document.querySelector('.ship'),
           sky = document.querySelector('.sky'),
           scale = document.querySelector('.health'),
-          exit = document.querySelector('.exit'),
           damage;
-    exit.addEventListener('click', () => {
-        health = 100;
-        let win = document.querySelector('.win');
-        if(win) {
-            win.remove();
-        }
-    });
     let timerId = setInterval(reduceHealth, 60);
     function reduceHealth() {
        let enPr = document.querySelectorAll('.enemyProjectile');

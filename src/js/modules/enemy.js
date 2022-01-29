@@ -128,9 +128,12 @@ export default class Enemy {
             constructor() {
                 const enemyProjectile = document.createElement('div');
                 enemyProjectile.classList.add('enemyProjectile');
-                enemyProjectile.style.left = (enemyShip.getBoundingClientRect().left) + ((enemyShip.getBoundingClientRect().width) / 2 - 3) +'px';
+                enemyProjectile.style.left = (enemyShip.getBoundingClientRect().left) + (enemyShip.getBoundingClientRect().width / 2) +'px';
                 enemyProjectile.style.top = enemyShip.getBoundingClientRect().bottom + 'px';
-                sky.append(enemyProjectile);
+                if(enemyProjectile.style.left.slice(0, -2) > 0) {
+                    sky.append(enemyProjectile);
+                }
+                // sky.append(enemyProjectile);
                 let distance = +enemyProjectile.style.top.slice(0, -2);
 
                 function trajectory () {
@@ -139,14 +142,14 @@ export default class Enemy {
                         enemyProjectile.style.top = distance + 'px';
                     } 
                     if(distance > sky.getBoundingClientRect().bottom) {
-                        clearInterval(trajectory);
+                        clearInterval(timerId);
                         enemyProjectile.remove();
                     }
                     if(enemyProjectile.style.left.slice(0, -2) < 0) {
                         enemyProjectile.remove();
                     }
                 }
-                setInterval(trajectory, 10);
+                let timerId = setInterval(trajectory, 10);
             }
         }
         function createEnProj() {
