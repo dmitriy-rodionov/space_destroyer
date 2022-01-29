@@ -7,6 +7,7 @@ export default class Enemy {
         let enemyShip = document.createElement('img');
         enemyShip.style.width = '70px';
         enemyShip.style.height = '90px';
+        enemyShip.classList.add('enemy');
         // enemyShip.style.borderRadius = '10px';
 
         function enemyType() {
@@ -24,7 +25,7 @@ export default class Enemy {
                 enemyShip.src = 'img/pngegg(3).png';
             }
         }
-
+        
         enemyType();
         enemyShip.style.position = 'absolute';
         enemyShip.style.top = '0px';
@@ -151,7 +152,7 @@ export default class Enemy {
         function createEnProj() {
             new EnemyGun
         }
-        setInterval(createEnProj, 5000);
+        setInterval(createEnProj, 2500);
         
     }
 }

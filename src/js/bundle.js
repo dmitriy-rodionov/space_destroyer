@@ -21,6 +21,7 @@ class Enemy {
         let enemyShip = document.createElement('img');
         enemyShip.style.width = '70px';
         enemyShip.style.height = '90px';
+        enemyShip.classList.add('enemy');
         // enemyShip.style.borderRadius = '10px';
 
         function enemyType() {
@@ -38,7 +39,7 @@ class Enemy {
                 enemyShip.src = 'img/pngegg(3).png';
             }
         }
-
+        
         enemyType();
         enemyShip.style.position = 'absolute';
         enemyShip.style.top = '0px';
@@ -165,10 +166,142 @@ class Enemy {
         function createEnProj() {
             new EnemyGun
         }
-        setInterval(createEnProj, 5000);
+        setInterval(createEnProj, 2500);
         
     }
 }
+
+/***/ }),
+
+/***/ "./src/js/modules/lastEnemy.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/lastEnemy.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const lastEnemy = () => {
+    const le = document.createElement('img'),
+          sky = document.querySelector('.sky');
+    le.src = 'img/pngegg (1).png';
+    le.style.width = '120px';
+    le.style.height = '120px';
+    le.style.position = 'absolute';
+    le.style.top = '0px';
+    le.style.left = '50%';
+    sky.append(le);
+    le.classList.add('lastEnemy');
+    let enemyHealth = 10;
+
+    class EnemyGun {
+        constructor() {
+            const enemyProjectile = document.createElement('div');
+            enemyProjectile.classList.add('enemyProjectile');
+            enemyProjectile.style.left = (le.getBoundingClientRect().left) + ((le.getBoundingClientRect().width) / 2 - 3) +'px';
+            enemyProjectile.style.top = le.getBoundingClientRect().bottom + 'px';
+            sky.append(enemyProjectile);
+            let distance = +enemyProjectile.style.top.slice(0, -2);
+
+            function trajectory () {
+                if (distance < sky.getBoundingClientRect().bottom) {
+                    distance = distance + 5;
+                    enemyProjectile.style.top = distance + 'px';
+                } 
+                if(distance > sky.getBoundingClientRect().bottom) {
+                    clearInterval(trajectory);
+                    enemyProjectile.remove();
+                }
+                if(enemyProjectile.style.left.slice(0, -2) < 0) {
+                    enemyProjectile.remove();
+                }
+            }
+            setInterval(trajectory, 10);
+        }
+    }
+    function createEnProj() {
+        new EnemyGun
+    }
+    setInterval(createEnProj, 1500);
+    setInterval(enemyCrash, 60);
+
+    function enemyCrash() {
+        let projectiles = document.querySelectorAll('.projectile');
+        const ship = document.querySelector('.ship');
+        projectiles.forEach((item) => {
+            if(
+                item.getBoundingClientRect().top < le.getBoundingClientRect().bottom &&
+                item.getBoundingClientRect().bottom < le.getBoundingClientRect().bottom &&
+                item.getBoundingClientRect().left >= le.getBoundingClientRect().left &&
+                item.getBoundingClientRect().right <= le.getBoundingClientRect().right &&
+                ship.getBoundingClientRect().top > le.getBoundingClientRect().bottom
+                ) {
+                    enemyHealth--;
+                    console.log(enemyHealth);
+                    if(enemyHealth < 1) {
+                        enemyBang(true);
+                        le.remove();
+                        showWinWindow();
+                    }
+                    item.remove();
+                }
+            
+        });
+    }
+    function enemyBang(arg) {
+        const canvas = document.createElement('canvas'),
+              ctx = canvas.getContext('2d'),
+              le = document.querySelector('.lastEnemy'),
+              sprite = new Image();
+
+        canvas.style.width = '340px';
+        canvas.style.height = '340px';
+        canvas.style.position = 'absolute';
+        canvas.style.top = le.style.top;
+        canvas.style.left = le.style.left;
+        canvas.style.transform = 'translateX(-50%)';
+        sprite.src = 'img/sprite.png';
+        sky.append(canvas);
+
+        let tickCount = 0,
+            spriteLenght = 8,
+            frameWidth = 0,
+            frameHight = 0;
+
+        if(arg === true) {
+            tick();
+            setTimeout(() => canvas.remove(), 1000);
+        }
+
+        function tick() {
+            draw();
+            if(tickCount < spriteLenght) {
+                frameWidth = frameWidth + 240;
+            }
+            if(tickCount == spriteLenght) {
+                tickCount = 0;
+                frameHight = frameHight + 240;
+                frameWidth = 0;
+            }
+            requestAnimationFrame(tick);
+            tickCount++;
+        }
+        
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(sprite, frameWidth, frameHight, 240, 240, 0, 0, canvas.width, canvas.height);
+        }
+    }
+    function showWinWindow() {
+        const win = document.createElement('div'),
+              sky = document.querySelector('.sky');
+        win.textContent = 'победа';
+        win.classList.add('win');
+        sky.append(win);
+        
+    }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (lastEnemy);
 
 /***/ }),
 
@@ -246,7 +379,16 @@ const shipHealth = () => {
           ship = document.querySelector('.ship'),
           sky = document.querySelector('.sky'),
           scale = document.querySelector('.health'),
+          exit = document.querySelector('.exit'),
           damage;
+    exit.addEventListener('click', () => {
+        health = 100;
+        let win = document.querySelector('.win');
+        if(win) {
+            win.remove();
+        }
+    });
+    let timerId = setInterval(reduceHealth, 60);
     function reduceHealth() {
        let enPr = document.querySelectorAll('.enemyProjectile');
        enPr.forEach((item) => {
@@ -262,9 +404,24 @@ const shipHealth = () => {
                 projectileBang(true, item);
                 item.remove();
             }
+        if(health <= 0) {
+            showLossWindow();
+            clearInterval(timerId);
+            const enemies = document.querySelectorAll('.enemy'),
+                 le = document.querySelector('.lastEnemy');
+            if(enemies.length > 0) {
+                enemies.forEach((item) => {
+                    item.remove();
+                });
+            }
+            if(le != null) {
+                le.remove();
+            }
+            ship.remove();
+        }
        });
     }
-    setInterval(reduceHealth, 10);
+
     function calcDamage() {
         let d = Math.round(Math.random() * 10);
         if(d <= 3) {
@@ -277,6 +434,16 @@ const shipHealth = () => {
             damage = 10;
         }
     }
+
+    function showLossWindow() {
+        const win = document.createElement('div'),
+              sky = document.querySelector('.sky');
+        win.textContent = 'ты проиграл';
+        win.classList.add('win');
+        sky.append(win);
+    }
+
+
 
     // взрыв снаряда
     function projectileBang(arg, item) {
@@ -434,6 +601,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_shot__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/shot */ "./src/js/modules/shot.js");
 /* harmony import */ var _modules_enemy__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/enemy */ "./src/js/modules/enemy.js");
 /* harmony import */ var _modules_shiphealth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/shiphealth */ "./src/js/modules/shiphealth.js");
+/* harmony import */ var _modules_lastEnemy__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/lastEnemy */ "./src/js/modules/lastEnemy.js");
+
 
 
 
@@ -463,9 +632,21 @@ function getStart() {
 
 function finish() {
     const sky = document.querySelector('.sky'),
-          exit = document.querySelector('.exit');
+          exit = document.querySelector('.exit'),
+          counter = document.querySelector('.counter'),
+          health = document.querySelector('.health');
     exit.addEventListener('click', () => {
         sky.style.transform = 'translateY(0%)';
+        health.style.transform = 'translateX(100%)';
+        counter.textContent = '00';
+        let enemies = document.querySelectorAll('.enemy'),
+          le = document.querySelector('.lastEnemy');
+        enemies.forEach((item) => {
+            item.remove();
+        });
+        if(le != null) {
+            le.remove();
+        }
     });
 }
 
@@ -493,11 +674,32 @@ document.addEventListener('keydown', (event) => {
 
 const makeEnemies = function() {
     const counter = document.querySelector('.counter');
-    if(+counter.textContent >= 5) {
+    if(+counter.textContent > 5) {
         clearInterval(makeEnemies);
+        const enemies = document.querySelectorAll('.enemy');
+        enemies.forEach((item) => {
+            item.remove();
+            further();
+        });
     } else {
         new _modules_enemy__WEBPACK_IMPORTED_MODULE_2__["default"]();
     }
+}
+
+function further() {
+    const back = document.querySelector('.back'),
+          ship = document.querySelector('.ship img');
+    setTimeout(() => {
+        back.classList.add('back_fast');
+        ship.src = 'img/72333.png';
+        ship.style.height = '140px';
+    },1000);
+    setTimeout(() => {
+        back.classList.remove('back_fast');
+        ship.src = 'img/pngegg (4).png';
+        ship.style.height = '100px';
+        setTimeout(_modules_lastEnemy__WEBPACK_IMPORTED_MODULE_4__["default"],2000);
+    },6000);
 }
 }();
 /******/ })()

@@ -3,7 +3,16 @@ const shipHealth = () => {
           ship = document.querySelector('.ship'),
           sky = document.querySelector('.sky'),
           scale = document.querySelector('.health'),
+          exit = document.querySelector('.exit'),
           damage;
+    exit.addEventListener('click', () => {
+        health = 100;
+        let win = document.querySelector('.win');
+        if(win) {
+            win.remove();
+        }
+    });
+    let timerId = setInterval(reduceHealth, 60);
     function reduceHealth() {
        let enPr = document.querySelectorAll('.enemyProjectile');
        enPr.forEach((item) => {
@@ -19,9 +28,24 @@ const shipHealth = () => {
                 projectileBang(true, item);
                 item.remove();
             }
+        if(health <= 0) {
+            showLossWindow();
+            clearInterval(timerId);
+            const enemies = document.querySelectorAll('.enemy'),
+                 le = document.querySelector('.lastEnemy');
+            if(enemies.length > 0) {
+                enemies.forEach((item) => {
+                    item.remove();
+                });
+            }
+            if(le != null) {
+                le.remove();
+            }
+            ship.remove();
+        }
        });
     }
-    setInterval(reduceHealth, 10);
+
     function calcDamage() {
         let d = Math.round(Math.random() * 10);
         if(d <= 3) {
@@ -34,6 +58,16 @@ const shipHealth = () => {
             damage = 10;
         }
     }
+
+    function showLossWindow() {
+        const win = document.createElement('div'),
+              sky = document.querySelector('.sky');
+        win.textContent = 'ты проиграл';
+        win.classList.add('win');
+        sky.append(win);
+    }
+
+
 
     // взрыв снаряда
     function projectileBang(arg, item) {

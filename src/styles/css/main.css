@@ -195,6 +195,9 @@
   background: url("../../img/space2.jpg") center center/cover;
   background-size: 100% 50%;
 }
+.sky .back_fast {
+  animation: downward 1s linear infinite;
+}
 
 @keyframes downward {
   from {
@@ -202,6 +205,75 @@
   }
   to {
     background-position: 0% 200%;
+  }
+}
+.lastEnemy {
+  animation: leAnimate 35s linear infinite;
+}
+
+@keyframes leAnimate {
+  from {
+    transform: translate(0%, 0%);
+  }
+  5% {
+    transform: translate(230%, 0%);
+  }
+  10% {
+    transform: translate(-270%, 60%);
+  }
+  15% {
+    transform: translate(270%, 360%);
+  }
+  20% {
+    transform: translate(-350%, 290%);
+  }
+  25% {
+    transform: translate(290%, 150%);
+  }
+  30% {
+    transform: translate(-300%, 100%);
+  }
+  35% {
+    transform: translate(300%, 30%);
+  }
+  40% {
+    transform: translate(-250%, 30%);
+  }
+  45% {
+    transform: translate(-250%, 30%);
+  }
+  50% {
+    transform: translate(270%, 30%);
+  }
+  55% {
+    transform: translate(-300%, 0%);
+  }
+  60% {
+    transform: translate(300%, 0%);
+  }
+  65% {
+    transform: translate(-300%, 160%);
+  }
+  70% {
+    transform: translate(270%, 160%);
+  }
+  75% {
+    transform: translate(-310%, 70%);
+  }
+  80% {
+    transform: translate(310%, 70%);
+  }
+  85% {
+    transform: translate(-280%, 20%);
+  }
+  90% {
+    transform: translate(280%, 20%);
+  }
+  95% {
+    transform: translate(-290%, 10%);
+  }
+  to {
+    transform: translate(0%, 0%);
   }
 }
 .ship {
@@ -245,7 +317,7 @@
 .health-second {
   height: 10px;
   width: 100%;
-  background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
+  background: #8000ff;
   position: absolute;
   bottom: 0px;
 }
@@ -285,4 +357,14 @@
   font-family: "Roboto";
   src: url("../../fonts/Roboto-Medium.eot");
   src: url("../../fonts/Roboto-Medium.eot?#iefix") format("embedded-opentype"), url("../../fonts/Roboto-Medium.woff") format("woff"), url("../../fonts/Roboto-Medium.ttf") format("truetype");
+}
+.win {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 65px;
+  color: #8000ff;
+  text-transform: uppercase;
+  font-family: "Roboto";
 }
